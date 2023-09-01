@@ -1,0 +1,117 @@
+<div class='col-12 app-calendar'>
+
+    <full-calendar #calendar [options]="calendarOptions" >
+    </full-calendar>
+</div>
+<p-dialog [(visible)]="createDialogVisible" [style]="{width: '70vw'}" header="{{'scheduleProfTabPan' | translate}}" [modal]="true" styleClass="p-fluid" [maximizable]="true" [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="content">
+        <ng-container *ngIf="createDialogVisible">
+            <p-tabView>
+                <p-tabPanel header="{{'scheduleProfTabPan' | translate}}">
+                    <div class="grid">
+
+                        <div class="field col-12 md:col-6">
+                            <label for="11">{{'scheduleProfSubject' | translate}}</label>
+                            <input class="mb-2 mr-2" type="text" pInputText  placeholder="{{'scheduleProfSubject' | translate}}" id="11" [(ngModel)]="item.subject"
+                            />
+
+                        </div>
+
+
+
+                        <div class="field col-12 md:col-6">
+                            <label for="12">{{'scheduleProfStartTime' | translate}}</label>
+                            <p-calendar appendTo="body" id="12"  [showTime]="true" [showSeconds]="false" placeholder="{{'scheduleProfStartTime' | translate}}"  [(ngModel)]="item.startTime"
+                                        dateFormat="{{dateFormat}}"  >
+                            </p-calendar>
+
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <label for="13">{{'scheduleProfEndTime' | translate}}</label>
+                            <p-calendar appendTo="body" id="13"  [showTime]="true" [showSeconds]="false" placeholder="{{'scheduleProfEndTime' | translate}}"  [(ngModel)]="item.endTime"
+                                        dateFormat="{{dateFormat}}"  >
+                            </p-calendar>
+
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <label for="14">{{'scheduleProfRef' | translate}}</label>
+                            <input class="mb-2 mr-2" type="text" pInputText  placeholder="{{'scheduleProfRef' | translate}}" id="14" [(ngModel)]="item.ref"
+                            />
+
+                        </div>
+
+
+
+                        <div class="field col-11 md:col-6">
+                            <label for="15">{{'scheduleProfGroupeEtudiant' | translate}}</label>
+                            <p-dropdown  appendTo="body"  [options]="groupeEtudiants" [(ngModel)]="item.groupeEtudiant" id="15" [filter]="true" filterMatchMode="contains"
+                                         [showClear]="true" optionLabel="id" placeholder="{{'scheduleProfGroupeEtudiant' | translate}}"  >
+                            </p-dropdown>
+
+                        </div>
+                        <div class="field col-11 md:col-5">
+                            <label for="16">{{'scheduleProfProf' | translate}}</label>
+                            <p-dropdown  appendTo="body"  [options]="profs" [(ngModel)]="item.prof" id="16" [filter]="true" filterMatchMode="contains"
+                                         [showClear]="true" optionLabel="ref" placeholder="{{'scheduleProfProf' | translate}}"  >
+                            </p-dropdown>
+
+                        </div>
+                        <div class="col-1">
+                            <label></label>
+                            <button pButton pRipple type="button" icon="pi pi-plus" (click)="openCreateProf('Prof')" class="p-button-success one-colonne-btn-success-align"></button>
+                        </div>
+                        <div class="field col-11 md:col-6">
+                            <label for="17">{{'scheduleProfCours' | translate}}</label>
+                            <p-dropdown  appendTo="body"  [options]="courss" [(ngModel)]="item.cours" id="17" [filter]="true" filterMatchMode="contains"
+                                         [showClear]="true" optionLabel="libelle" placeholder="{{'scheduleProfCours' | translate}}"  >
+                            </p-dropdown>
+
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            <label for="18">{{'scheduleProfGrpName' | translate}}</label>
+                            <input class="mb-2 mr-2" type="text" pInputText  placeholder="{{'scheduleProfGrpName' | translate}}" id="18" [(ngModel)]="item.grpName"
+                            />
+
+                        </div>
+
+
+
+                        <div class="field col-12 md:col-6">
+                            <label for="19">{{'scheduleProfProfName' | translate}}</label>
+                            <input class="mb-2 mr-2" type="text" pInputText  placeholder="{{'scheduleProfProfName' | translate}}" id="19" [(ngModel)]="item.profName"
+                            />
+
+                        </div>
+
+
+
+                        <div class="field col-12 md:col-6">
+                            <label for="20">{{'scheduleProfProfsId' | translate}}</label>
+                            <p-inputNumber class="mb-2 mr-2" id="20" placeholder="{{'scheduleProfProfsId' | translate}}" [(ngModel)]="item.profsId"  >
+                            </p-inputNumber>
+
+                        </div>
+
+                    </div>
+                </p-tabPanel>
+
+            </p-tabView>
+        </ng-container>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer" >
+        <div class="grid-step">
+            <div style="margin-left: auto;">
+                <button pButton pRipple  label="{{'validate' | translate}}"  icon="pi pi-check" style="margin:10px" (click)="saveNew()"></button>
+            </div>
+            <!--<div>
+                <button pButton pRipple  label="{{'cancel' | translate}}" icon="pi pi-times" class="p-button-outlined" (click)="createController.hideCreateDialog()"></button>
+            </div>-->
+
+        </div>
+    </ng-template>
+</p-dialog>
+<app-schedule-prof-edit-admin></app-schedule-prof-edit-admin>

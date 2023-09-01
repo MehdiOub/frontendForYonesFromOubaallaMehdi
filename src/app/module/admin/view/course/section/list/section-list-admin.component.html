@@ -1,0 +1,247 @@
+<div class="grid">
+    <div class="col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label=" {{'new' | translate}}" icon="pi pi-plus"
+                            class="p-button-success mr-2 mb-2" (click)="openCreate()"></button>
+                    <button [disabled]="isSelectionDisabled()" pButton pRipple label=" {{'delete' | translate}}"
+                            icon="pi pi-trash" class="p-button-danger mr-2 mb-2" (click)=deleteMultiple()></button>
+                    <button pButton pRipple label=" {{'search' | translate}}"
+                            icon="pi pi-{{findByCriteriaShow?'angle-down':'angle-right'}}"
+                            class="p-button-warning mr-2 mb-2" (click)="this.showSearch()"></button>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <div class="flex">
+                        <p-splitButton label=" {{'export' | translate}}" icon="pi pi-download"
+                                       styleClass="p-button-help" [model]="excelPdfButons"></p-splitButton>
+                    </div>
+                </ng-template>
+
+            </p-toolbar>
+            <p-toolbar *ngIf="findByCriteriaShow">
+
+                <div class="align-form-search">
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <input class="mr-2" pInputText id="1" type="text" [(ngModel)]="criteria.codeLike">
+                        <label for="1">{{'Code' | translate}}</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <input class="mr-2" pInputText id="2" type="text" [(ngModel)]="criteria.libelleLike">
+                        <label for="2">{{'Libelle' | translate}}</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <input class="mr-2" pInputText id="3" type="text" [(ngModel)]="criteria.urlImageLike">
+                        <label for="3">{{'Url image' | translate}}</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <input class="mr-2" pInputText id="4" type="text" [(ngModel)]="criteria.urlImage2Like">
+                        <label for="4">{{'Url image2' | translate}}</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <input class="mr-2" pInputText id="5" type="text" [(ngModel)]="criteria.urlImage3Like">
+                        <label for="5">{{'Url image3' | translate}}</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <input class="mr-2" pInputText id="6" type="text" [(ngModel)]="criteria.urlVideoLike">
+                        <label for="6">{{'Url video' | translate}}</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <input class="mr-2" pInputText id="7" type="text" [(ngModel)]="criteria.contenuLike">
+                        <label for="7">{{'Contenu' | translate}}</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <input class="mr-2" pInputText id="8" type="text" [(ngModel)]="criteria.questionsLike">
+                        <label for="8">{{'Questions' | translate}}</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <input class="mr-2" pInputText id="9" type="text" [(ngModel)]="criteria.indicationProfLike">
+                        <label for="9">{{'Indication prof' | translate}}</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <p-inputNumber class="mr-2" mode="decimal" [(ngModel)]="criteria.numeroOrderMin"
+                                       id="10-1"></p-inputNumber>
+                        <label for="10-1">{{'Numero order' | translate}} Min</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <p-inputNumber class="mr-2" mode="decimal" [(ngModel)]="criteria.numeroOrderMax"
+                                       id="10-2"></p-inputNumber>
+                        <label for="10-2">{{'Numero order' | translate}} Max</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <p-dropdown [options]="categorieSections" [(ngModel)]="criteria.categorieSection" id="11"
+                                    [filter]="true"
+                                    [showClear]="true" placeholder="{{'Categorie section' | translate}}"
+                                    optionLabel="code">
+                        </p-dropdown>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <p-dropdown [options]="courss" [(ngModel)]="criteria.cours" id="12" [filter]="true"
+                                    [showClear]="true" placeholder="{{'Cours' | translate}}" optionLabel="libelle">
+                        </p-dropdown>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <p-inputNumber class="mr-2" mode="decimal" [(ngModel)]="criteria.urlMin"
+                                       id="13-1"></p-inputNumber>
+                        <label for="13-1">{{'Url' | translate}} Min</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <p-inputNumber class="mr-2" mode="decimal" [(ngModel)]="criteria.urlMax"
+                                       id="13-2"></p-inputNumber>
+                        <label for="13-2">{{'Url' | translate}} Max</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <p-inputNumber class="mr-2" mode="decimal" [(ngModel)]="criteria.contentMin"
+                                       id="14-1"></p-inputNumber>
+                        <label for="14-1">{{'Content' | translate}} Min</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <p-inputNumber class="mr-2" mode="decimal"
+                                       [(ngModel)]="criteria.contentMax"
+                                       id="14-2"></p-inputNumber>
+                        <label for="14-2">{{'Content' | translate}} Max</label>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <p-dropdown [options]="sessionCourss" [(ngModel)]="criteria.sessionCours" id="16"
+                                    [filter]="true"
+                                    [showClear]="true" placeholder="{{'Session cours' | translate}}"
+                                    optionLabel="reference">
+                        </p-dropdown>
+                    </span>
+                    <span class=" p-float-label mr-3 align-search-items mt-4">
+                        <p-dropdown [options]="sectionStatuses" [(ngModel)]="criteria.status" id="17"
+                                    [showClear]="true" placeholder="{{'Status' | translate}}">
+                        </p-dropdown>
+                    </span>
+                </div>
+
+                <div class="align-search-button">
+                    <button type="submit" pButton pRipple label="{{'validate' | translate}}"
+                            icon="pi pi-sort-amount-down"
+                            class="p-button-info mr-2" (click)="findPaginatedByCriteria()"></button>
+                </div>
+            </p-toolbar>
+
+            <p-table #dt [value]="items" [columns]="cols" [rows]="8" [paginator]="false"
+                     [globalFilterFields]="[
+                          'code', 'libelle', 'urlImage', 'urlImage2', 'urlImage3',
+                          'urlVideo', 'contenu', 'questions', 'indicationProf',
+                          'numeroOrder', 'categorieSectionlibelle', 'courslibelle',
+                          'url', 'content', 'sessionCoursreference']"
+                     [(selection)]="selections"
+                     [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                     currentPageReportTemplate="{{'Les éléments de {first} à {last} sur {totalRecords} ' | translate}}"
+                     [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" selectionMode="multiple">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column flex-row justify-content-between table-header">
+                        <h5 class="p-m-0">{{'sectionHeader' | translate}}</h5>
+                        <span class="p-input-icon-left ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" placeholder="{{'searchInput' | translate}}"
+                                   (input)="dt.filterGlobal($event.target.value, 'contains')"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="libelle">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'Title' | translate}}</span>
+                                <p-sortIcon field="libelle"></p-sortIcon>
+                                <p-columnFilter type="text" field="element.libelle" display="menu"
+                                                class="ml-auto"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="categorieSection">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'Categorie' | translate}}</span>
+                                <p-sortIcon field="categorieSection"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="status">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'Status' | translate}}</span>
+                                <p-sortIcon field="status"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="image">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'voir image' | translate}}</span>
+                            </div>
+                        </th>
+                        <th pSortableColumn="quiz">
+                            <div class="p-d-flex p-jc-between p-ai-center">
+                                <span>{{'Quiz' | translate}}</span>
+                            </div>
+                        </th>
+                        <th pSortableColumn="actions">Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-element>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="element"></p-tableCheckbox>
+                        </td>
+                        <td>{{element.libelle}}</td>
+                        <td>{{element.categorieSection?.libelle}}</td>
+                        <td class="status">
+                            <span [class]="element.status">
+                                {{element.status}}
+                            </span>
+                        </td>
+                        <td class="buttons">
+                            <button class="blue">
+                                <span class="pi pi-eye"></span> <span>voir</span>
+                            </button>
+                        </td>
+                        <td class="buttons">
+                            <ng-container *ngIf="isNeedQuiz(element) else notNeedQuiz">
+                                <button *ngIf="element.quizExist" class="blue" (click)="openEditQuiz(element)">
+                                    <span class="pi pi-pencil"></span> <span>Edit Quiz</span>
+                                </button>
+                                <button *ngIf="!element.quizExist" class="green" (click)="openCreateQuiz(element)">
+                                    <span class="pi pi-plus-circle"></span> <span>Create Quiz</span>
+                                </button>
+                            </ng-container>
+                            <ng-template #notNeedQuiz>
+                                <button class="gray">Not Required</button>
+                            </ng-template>
+                        </td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                                    (click)="edit(element)"></button>
+                            <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info mr-2"
+                                    (click)="view(element)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger mr-2"
+                                    (click)="delete(element)"></button>
+                            <button pButton pRipple icon="pi pi-copy"
+                                    class="p-button-rounded p-button-raised p-button-warning"
+                                    (click)="duplicate(element)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="summary">
+                    <p-paginator [rows]="10" [totalRecords]="totalRecords"
+                                 (onPageChange)="onPage($event)"></p-paginator>
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        En totale
+                        il {{items ? totalRecords == 1 ? 'y a' : 'y a' : 'y a' }} {{items ? totalRecords : 0 }} {{items ? totalRecords == 1 ? 'section' : 'sections' : 0 }}
+                        .
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <app-section-create-admin></app-section-create-admin>
+        <app-section-edit-admin></app-section-edit-admin>
+        <app-section-view-admin></app-section-view-admin>
+        <app-quiz-create-admin></app-quiz-create-admin>
+        <app-quiz-edit-admin></app-quiz-edit-admin>
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+</div>

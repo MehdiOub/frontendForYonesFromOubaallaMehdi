@@ -1,0 +1,6 @@
+.page-containeres {
+  display: flex; /* Use flexbox to arrange elements horizontally */
+  flex-direction: column; /* Arrange elements vertically */
+  height: 90vh; /* Use the full viewport height */
+  overflow: hidden; /* Hide any overflow to prevent scrollbars */
+}
